@@ -75,7 +75,7 @@ pipelines:
             - '& "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" "CSharp_Rpas.sln" /p:DeployOnBuild=true /p:PublishProfile=FolderProfile6 /p:Configuration=Release'
             - echo "Publish complete. Copying 'Source' folder to C:\\Publish if it exists..."
             - powershell -Command "if (Test-Path 'C:\\temp\\Publish\\Source') { Copy-Item -Recurse -Force 'C:\\temp\\Publish\\Source' 'C:\\Publish\\' } else { Write-Host 'Source folder not found. Skipping copy.' }"
-
+```
 -------
 Notes:
 ------
