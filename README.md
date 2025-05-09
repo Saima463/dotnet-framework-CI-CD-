@@ -40,7 +40,11 @@ Step 2: Bitbucket Pipeline Configuration
 Create a `.bitbucket-pipelines.yml` file in the root of your repository with the following content:
 
 
+## Step 2: Bitbucket Pipeline Configuration
 
+Create a `.bitbucket-pipelines.yml` file in the root of your repository with the following content:
+
+```yaml
 pipelines:
   branches:
     dev-server:
@@ -52,36 +56,25 @@ pipelines:
           script:
             - echo "Setting Git to allow long paths..."
             - git config --system core.longpaths true
-
             - echo "Current directory:"
             - powershell -Command "pwd"
-
             - echo "Navigating into 'ashish' folder..."
             - cd ashish
-
             - echo "Now inside:"
             - powershell -Command "pwd"
-
             - echo "Contents of 'ashish' folder:"
             - dir
-
             - powershell -Command "Get-Item 'packages\\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.8.1\\lib\\net45\\Microsoft.AI.ServerTelemetryChannel.dll'"
             - powershell -Command "Get-Item 'packages\\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\\lib\\net45\\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll'"
-
             - powershell -Command "& 'C:\\Users\\Administrator\\Downloads\\nuget.exe' restore 'CSharp_Rpas.sln' -PackagesDirectory './packages'"
             - 'C:\\Users\\Administrator\\Downloads\\nuget.exe restore -Force CSharp_Rpas.sln'
-
             - echo "Building the solution with MSBuild..."
             - '& "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" "CSharp_Rpas.sln" /p:OutputPath=C:\\BuildOutput'
-
             - echo "Build complete. Output available in C:\\BuildOutput"
-
             - echo "Publishing the solution using publish profile..."
             - '& "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" "CSharp_Rpas.sln" /p:DeployOnBuild=true /p:PublishProfile=FolderProfile6 /p:Configuration=Release'
-
             - echo "Publish complete. Copying 'Source' folder to C:\\Publish if it exists..."
             - powershell -Command "if (Test-Path 'C:\\temp\\Publish\\Source') { Copy-Item -Recurse -Force 'C:\\temp\\Publish\\Source' 'C:\\Publish\\' } else { Write-Host 'Source folder not found. Skipping copy.' }"
-
 
 Notes:
 ------
