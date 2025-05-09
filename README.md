@@ -76,6 +76,7 @@ pipelines:
             - echo "Publish complete. Copying 'Source' folder to C:\\Publish if it exists..."
             - powershell -Command "if (Test-Path 'C:\\temp\\Publish\\Source') { Copy-Item -Recurse -Force 'C:\\temp\\Publish\\Source' 'C:\\Publish\\' } else { Write-Host 'Source folder not found. Skipping copy.' }"
 
+-------
 Notes:
 ------
 
