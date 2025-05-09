@@ -39,6 +39,8 @@ Step 2: Bitbucket Pipeline Configuration
 
 Create a `.bitbucket-pipelines.yml` file in the root of your repository with the following content:
 
+
+
 pipelines:
   branches:
     dev-server:
