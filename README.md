@@ -73,8 +73,15 @@ pipelines:
             - echo "Build complete. Output available in C:\\BuildOutput"
             - echo "Publishing the solution using publish profile..."
             - '& "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" "CSharp_Rpas.sln" /p:DeployOnBuild=true /p:PublishProfile=FolderProfile6 /p:Configuration=Release'
-            - echo "Publish complete. Copying 'Source' folder to C:\\Publish if it exists..."
-            - powershell -Command "if (Test-Path 'C:\\temp\\Publish\\Source') { Copy-Item -Recurse -Force 'C:\\temp\\Publish\\Source' 'C:\\Publish\\' } else { Write-Host 'Source folder not found. Skipping copy.' }"
+            - echo "Publish complete. Copying 'Source' folder to C:\\Publish"                      
+            # Clear destination if exists
+            - powershell -Command "if (Test-Path 'C:\\Publish\\Source') { Remove-Item 'C:\\Publish\\Source' -Recurse -Force }"   
+            # Copy only the Source folder
+            - powershell -Command "Copy-Item -Path 'C:\\temp\\Publish\\Source' -Destination 'C:\\Publish\\' -Recurse -Force -ErrorAction Stop"  
+            # Verify copy
+            - powershell -Command "Write-Host 'Copied Source folder contents:'; Get-ChildItem 'C:\\Publish\\Source' -Recurse | Select-Object FullName"
+
+
 ```
 -------
 Notes:
