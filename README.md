@@ -80,6 +80,9 @@ pipelines:
             - powershell -Command "Copy-Item -Path 'C:\\temp\\Publish\\Source' -Destination 'C:\\Publish\\' -Recurse -Force -ErrorAction Stop"  
             # Verify copy
             - powershell -Command "Write-Host 'Copied Source folder contents:'; Get-ChildItem 'C:\\Publish\\Source' -Recurse | Select-Object FullName"
+            - echo "Setting Content of web.config"
+            - powershell -ExecutionPolicy Bypass -File edit-webconfig.ps1
+
 
 
 ```
